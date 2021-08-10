@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form/Form';
+let dict = new Set<string>();
 
-function App() {
+export default function App() {
+    const [message, setMessage] = React.useState<string>('');
+
+    const addToDict = (word: string): void => {
+        dict.add(word);
+    }
+
+    const srcInDict = (word: string): void => {
+        if (dict.has(word)) {
+          setMessage(`Word "${word}" exists!`);
+        } else {
+          setMessage(`Word "${word}" doesn't exists!`);
+        }
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <div className="App">
+          <h1>DICTIONARY</h1>
+          <p>Add words and search for them, make sure that the words are valid.(just letters and '-')</p>
+          <br />
+          <Form btnAction="add" handleData={addToDict}></Form>
+          <br />
+          <br />
+          <Form btnAction="search" handleData={srcInDict}></Form>
+          <br />
+          <i>{message}</i>
+        </div>
+    );
 }
-
-export default App;
